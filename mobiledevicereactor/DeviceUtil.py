@@ -13,7 +13,7 @@ class DeviceUtil(object):
     classdocs
     '''
     prev_macaddress_list = []
-    registered_user = [('00:00:00:00:00:00','user1'),('00:00:00:00:00:01','user2')]
+    registered_users = [('00:00:00:00:00:00','user1'),('00:00:00:00:00:01','user2')]
 
     def __init__(self):
         '''
@@ -49,22 +49,29 @@ class DeviceUtil(object):
     
     def get_registered_devices(self):
         """
-        登録されているMACアドレスとそれに対応するユーザ名を返す。
+        登録されているMACアドレスとそれに対応するユーザ名の一覧を返す。
         
         :rtype: List
         :return: [(macaddress(string),user_name(string))]
         """    
-        return self.registered_user
+        return self.registered_users
         
         
     
     def get_registered_device(self, macaddress):
         """
+        引数で指定するMACアドレスに対応するユーザを登録されているリストから検索し、
+        MACアドレスとユーザ名の組を返却する
         :param macaddress String: macaddress
         :rtype: tuple
         :return: (macaddress(string), user_name(string))
         """
+        for registered_user in self.registered_users:
+            if macaddress == registered_user[0]:
+                return registered_user
         
+        return (macaddress,'')
+    
     def _scan_macaddress(self):
         """
         :return: ([macaddress(string)])
